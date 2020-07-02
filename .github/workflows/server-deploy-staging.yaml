@@ -23,7 +23,7 @@ jobs:
           java-version: '12.0.2'
           architecture: x86
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@0.1.2
-      - run: gcloud info
+      - run: gcloud components install app-engine-java && gcloud components update
       - name: Setup GCP Credentials
         shell: bash
         run: |
@@ -41,7 +41,7 @@ jobs:
         run: ./bin/deploy-staging.sh
         working-directory: server
       - name: Destroy GCP Credentials File
-        run: rm $GOOGLE_APPLICATION_CREDENTIALS
+        run: rm $APPLICATION_CREDENTIALS
         if: ${{ always() }}
         env:
           APPLICATION_CREDENTIALS: "${{ runner.temp }}/gcp.json"
