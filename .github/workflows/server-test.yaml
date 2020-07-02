@@ -24,8 +24,6 @@ jobs:
       with:
         java-version: '12.0.2'
         architecture: x86
-    - uses: eskatos/gradle-command-action@v1
-      with:
-        gradle-version: 5.2.1
-    - run: gradle wrapper && ./gradlew test
+    - uses: gradle/wrapper-validation-action@v1
+    - run: ./gradlew test
       working-directory: server
