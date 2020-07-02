@@ -23,15 +23,13 @@ jobs:
           java-version: '12.0.2'
           architecture: x86
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@0.1.2
-        with:
-          project_id: who-myhealth-staging
       - run: gcloud info
       - name: Setup GCP Credentials
         shell: bash
         run: |
           echo "$BASE64_KEY_JSON" | base64 --decode > $APPLICATION_CREDENTIALS_GPG
           gpg --quiet --batch --yes --decrypt --passphrase="$KEY_PASSPHRASE" --output $APPLICATION_CREDENTIALS $APPLICATION_CREDENTIALS_GPG
-          rm $PPLICATION_CREDENTIALS_GPG
+          rm $APPLICATION_CREDENTIALS_GPG
           gcloud auth activate-service-account --key-file=$APPLICATION_CREDENTIALS
         env:
           BASE64_KEY_JSON: "${{ secrets.APP_ENGINE_DEPLOY_STAGING_SVCACCT_JSON }}"
